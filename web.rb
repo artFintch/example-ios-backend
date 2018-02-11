@@ -15,6 +15,17 @@ get '/' do
   return "Great, your backend is set up. Now you can configure the Stripe example apps to point here."
 end
 
+get '/customers' do
+  begin
+    @customer = Stripe::Customer.retrieve(params["customer_id"])
+  rescue Stripe::InvalidRequestError
+  end
+  session[:customer_id] = @customer.id
+  
+  status 200
+  return @customer.to_json
+end
+
 post '/ephemeral_keys' do
   authenticate!
   begin
