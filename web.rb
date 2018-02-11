@@ -68,7 +68,7 @@ post '/charge' do
   end
 
   status 200
-  return "Charge successfully created"
+  return "Charge successfully created #{source.to_json}"
 end
 
 def authenticate!
